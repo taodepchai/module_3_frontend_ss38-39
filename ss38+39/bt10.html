@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      input[type="text"] {
+        padding: 5px;
+      }
+      .container {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+      }
+      .tron {
+        width: 30px;
+        height: 30px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
+
+      .mau {
+        background-color: blue;
+        color: white;
+        cursor: pointer;
+      }
+
+      .disabled {
+        background-color: #ddd;
+        color: #555;
+        cursor: not-allowed;
+      }
+      tr:nth-child(even) {
+        background-color: gray;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="number" id="show" oninput="show()" />
+
+    <table id="data_table">
+      <tr>
+        <th>name</th>
+        <th>country</th>
+      </tr>
+    </table>
+    <div class="container">
+      <button onclick="prev()" id="prevButton" class="tru mau">prev</button>
+      <div class="tron" id="step1">1</div>
+      <div class="tron" id="step2">2</div>
+      <div class="tron" id="step3">3</div>
+      <div class="tron" id="step4">4</div>
+      <button onclick="next()" id="nextButton" class="cong mau">next</button>
+    </div>
+
+    <script>
+      function show() {
+        return document.getElementById("show").value;
+      }
+      let currentStep = 1;
+
+      function next() {
+        if (currentStep < 4) {
+          currentStep++;
+          updateSteps();
+          updateButtons();
+          loadTableData();
+        }
+      }
+
+      function prev() {
+        if (currentStep > 1) {
+          currentStep--;
+          updateSteps();
+          updateButtons();
+          loadTableData();
+        }
+      }
+
+      function updateSteps() {
+        for (let i = 1; i <= 4; i++) {
+          const step = document.getElementById(`step${i}`);
+          if (i == currentStep) {
+            step.classList.add("mau");
+          } else {
+            step.classList.remove("mau");
+          }
+        }
+      }
+
+      function updateButtons() {
+        let prevButton = document.getElementById("prevButton");
+        let nextButton = document.getElementById("nextButton");
+
+        prevButton.disabled = currentStep === 1;
+        nextButton.disabled = currentStep === 4;
+        if (prevButton.disabled) {
+          prevButton.classList.add("disabled");
+        } else {
+          prevButton.classList.remove("disabled");
+        }
+
+        if (nextButton.disabled) {
+          nextButton.classList.add("disabled");
+        } else {
+          nextButton.classList.remove("disabled");
+        }
+      }
+      updateSteps();
+      updateButtons();
+      loadTableData();
+      function loadTableData() {
+        let data = [
+          { name: "1", country: "1" },
+          { name: "2", country: "2" },
+          { name: "3", country: "3" },
+          { name: "4", country: "4" },
+          { name: "5", country: "5" },
+          { name: "6", country: "6" },
+          { name: "7", country: "7" },
+          { name: "8", country: "8" },
+          { name: "9", country: "9" },
+          { name: "10", country: "10" },
+          { name: "11", country: "11" },
+          { name: "12", country: "12" },
+          { name: "13", country: "13" },
+          { name: "14", country: "14" },
+          { name: "15", country: "15" },
+          { name: "16", country: "16" },
+          { name: "17", country: "17" },
+          { name: "18", country: "18" },
+          { name: "19", country: "19" },
+          { name: "20", country: "20" },
+          { name: "21", country: "21" },
+          { name: "22", country: "22" },
+          { name: "23", country: "23" },
+          { name: "24", country: "24" },
+          { name: "25", country: "25" },
+          { name: "26", country: "26" },
+          { name: "27", country: "27" },
+          { name: "28", country: "28" },
+          { name: "29", country: "29" },
+          { name: "30", country: "30" },
+          { name: "31", country: "31" },
+          { name: "32", country: "32" },
+          { name: "33", country: "33" },
+          { name: "34", country: "34" },
+          { name: "35", country: "35" },
+          { name: "36", country: "36" },
+          { name: "37", country: "37" },
+          { name: "38", country: "38" },
+        ];
+
+        let tableBody = document.getElementById("data_table");
+        tableBody.innerHTML = `<tr>
+        <th>name</th>
+        <th>country</th>
+      </tr>`;
+        let temp = show();
+        let startIndex = (currentStep - 1) * 10;
+        let endIndex = Math.min(startIndex + 10, data.length);
+
+        for (let i = startIndex; i < endIndex; i++) {
+          let rowData = data[i];
+          let row = `<tr><td>${rowData.name}</td><td>${rowData.country}</td></tr>`;
+          tableBody.innerHTML += row;
+        }
+      }
+    </script>
+  </body>
+</html>
